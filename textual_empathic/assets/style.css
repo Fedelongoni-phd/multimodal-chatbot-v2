@@ -19,6 +19,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height per mobile */
   margin: 0;
   padding: 0;
   overflow: hidden; /* Previene scroll su mobile */
@@ -31,6 +32,7 @@ body {
   box-shadow: none;
   width: 100vw;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height per mobile */
   max-width: 100vw;
   display: flex;
   flex-direction: column;
@@ -119,15 +121,29 @@ body {
 .chat-input-area {
   display: flex;
   padding: 10px; /* Mobile */
+  padding-bottom: max(10px, env(safe-area-inset-bottom)); /* Safe area per dispositivi con notch */
   background: #f9fafb;
   border-top: 1px solid #e5e7eb;
   align-items: center;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+/* Mobile specific improvements */
+@media (max-width: 767px) {
+  .chat-input-area {
+    padding: 12px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom) + 8px);
+    min-height: 60px; /* Altezza minima per touch target */
+  }
 }
 
 /* Tablet/Desktop */
 @media (min-width: 768px) {
   .chat-input-area {
     padding: 12px;
+    padding-bottom: 12px; /* Reset safe area su desktop */
   }
 }
 
