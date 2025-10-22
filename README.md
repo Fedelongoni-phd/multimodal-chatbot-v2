@@ -69,7 +69,7 @@ Utente → Interfaccia (Frontend) → Webhook n8n → ElevenLabs (STT) → Gemin
 
 ## Descrizione del progetto
 
-Il Multimodal Chatbot è pensato per esplorare l'interazione uomo–macchina attraverso la combinazione di modalità–linguaggio testuale / vocale– e stile –empatico / formale– .  
+Il Multimodal Chatbot è pensato per esplorare l'interazione uomo–macchina attraverso la combinazione di modalità –testuale / vocale– e stile –empatico / formale– .  
 
 ---
 
