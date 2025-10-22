@@ -45,12 +45,12 @@ function saveConversation() {
     });
   });
   
-  // Salva nel browser
-  localStorage.setItem('chatHistory_vocal_formal', JSON.stringify(messages));
+  // Salva nel browser (sessionStorage - si resetta quando chiudi la pagina)
+  sessionStorage.setItem('chatHistory_vocal_formal', JSON.stringify(messages));
 }
 
 function loadConversation() {
-  const saved = localStorage.getItem('chatHistory_vocal_formal');
+  const saved = sessionStorage.getItem('chatHistory_vocal_formal');
   if (saved) {
     const messages = JSON.parse(saved);
     

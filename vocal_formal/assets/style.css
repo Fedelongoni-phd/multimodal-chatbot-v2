@@ -86,20 +86,25 @@ body {
 }
 
 /* FUMETTI */
-.msg { display: flex; margin: 6px 0; }
+.msg { display: flex; margin: 4px 0; /* Ridotto per interfaccia più compatta */ }
 .msg.bot { justify-content: flex-start; }
 .msg.user { justify-content: flex-end; }
 
-/* Mobile - più spazio tra messaggi */
+/* Mobile - più compatto */
 @media (max-width: 767px) {
   .msg {
-    margin: 10px 0;
+    margin: 3px 0; /* Ridotto per interfaccia più compatta */
+  }
+  
+  .bubble {
+    padding: 8px 12px; /* Ancora più compatto su mobile */
+    font-size: 0.85rem; /* Font più piccolo su mobile */
   }
 }
 
 .bubble {
-  padding: 14px 18px; /* Mobile - più padding */
-  font-size: 1rem; /* Mobile - evita zoom */
+  padding: 10px 14px; /* Ridotto per interfaccia più compatta */
+  font-size: 0.9rem; /* Ridotto per compattezza */
   line-height: 1.5;
   max-width: 85%; /* Mobile - più spazio */
   animation: fadeIn 0.3s ease;
@@ -159,9 +164,9 @@ body {
 /* Mobile specific improvements */
 @media (max-width: 767px) {
   .voice-controls {
-    padding: 14px;
-    padding-bottom: max(14px, env(safe-area-inset-bottom) + 8px);
-    min-height: 80px; /* Altezza minima per touch target */
+    padding: 10px; /* Ridotto per compattezza */
+    padding-bottom: max(10px, env(safe-area-inset-bottom) + 6px);
+    min-height: 70px; /* Ridotto per interfaccia più compatta */
   }
 }
 
@@ -175,7 +180,7 @@ body {
 
 #micButton {
   width: 100%;
-  height: 64px; /* Mobile - più grande per touch */
+  height: 56px; /* Ridotto per interfaccia più compatta */
   border: none;
   border-radius: var(--radius);
   background: linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -194,7 +199,7 @@ body {
 /* Tablet/Desktop */
 @media (min-width: 768px) {
   #micButton {
-    height: 58px;
+    height: 52px; /* Ridotto per interfaccia più compatta */
   }
 }
 #micButton:focus-visible { outline: none; box-shadow: var(--focus-ring); }
@@ -451,45 +456,29 @@ body {
 }
 
 .devices-btn {
-  background: var(--primary);
-  color: white;
+  background: transparent;
+  color: var(--primary);
   border: none;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
+  /* RIMOSSO: border-radius: 50%; */
+  width: 32px; /* Ancora più piccolo */
+  height: 32px; /* Ancora più piccolo */
   cursor: pointer;
-  font-size: 18px;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  backdrop-filter: blur(20px);
-  box-shadow: var(--shadow);
+  font-size: 18px; /* Leggermente più grande per compensare la dimensione */
+  transition: transform 0.2s ease; /* Transizione per il movimento */
   position: relative;
-  overflow: hidden;
+  padding: 0; /* Rimuove qualsiasi padding */
+  margin: 0; /* Rimuove qualsiasi margin */
 }
 
-.devices-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.5s;
-}
-
-.devices-btn:hover::before {
-  left: 100%;
-}
+/* RIMOSSO: effetto luce che scorre */
 
 .devices-btn:hover {
-  background: var(--primary-light);
-  transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 8px 20px rgba(31, 41, 55, 0.3);
+  transform: translateY(-2px); /* Piccolo movimento verso l'alto */
+  transition: transform 0.2s ease; /* Transizione fluida */
 }
 
 .devices-btn:active {
-  transform: scale(0.95) translateY(0);
-  transition: all 0.1s ease;
+  /* Completamente basic - nessun effetto active */
 }
 
 /* Panel dispositivi */
@@ -718,9 +707,9 @@ body {
   }
   
   .devices-btn {
-    width: 44px;
-    height: 44px;
-    font-size: 16px;
+    width: 28px; /* Ancora più basic su mobile */
+    height: 28px; /* Ancora più basic su mobile */
+    font-size: 16px; /* Leggermente più grande per compensare */
   }
   
   .devices-header h3 {
