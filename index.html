@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#1f2937" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>Multimodal Chatbot Research Platform</title>
+  <style>
+    :root {
+      --font-main: "Inter", sans-serif;
+      --text-color: #0e1116;
+      --bg: #f3f4f6;
+      --white: #fff;
+      --radius: 16px;
+      --shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      --primary: #1f2937;
+      --primary-light: #374151;
+      --user-bg: #1f2937;
+      --user-bg-light: #374151;
+      --bot-bg: #f9fafb;
+      --focus-ring: 0 0 0 3px rgba(59,130,246,0.35);
+      
+      /* Responsive breakpoints */
+      --mobile: 480px;
+      --tablet: 768px;
+      --desktop: 1024px;
+    }
+
+    * { 
+      box-sizing: border-box; 
+      -webkit-tap-highlight-color: transparent; 
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f3f4f6;
+      color: #111;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .main-container {
+      max-width: 600px;
+      width: 100%;
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.1),
+        0 4px 20px rgba(0, 0, 0, 0.05);
+      padding: 48px;
+      animation: containerFadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      backdrop-filter: blur(10px);
+    }
+
+    @media (max-width: 768px) {
+      .main-container {
+        margin: 0 20px;
+        padding: 28px 24px;
+      }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .research-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      color: #475569;
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.8rem;
+      margin-bottom: 28px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      animation: badgeSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    h1 {
+      color: #111827;
+      font-weight: 800;
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      line-height: 1.2;
+      animation: titleSlideIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #6b7280;
+      margin-bottom: 0;
+      font-weight: 400;
+      line-height: 1.5;
+      animation: subtitleFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+    }
+
+    .interfaces-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .interfaces-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+    }
+
+    .interface-card {
+      background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+      border: none;
+      border-radius: 16px;
+      padding: 28px;
+      text-decoration: none;
+      color: #ffffff;
+      transition: transform 0.3s ease, background 0.25s ease;
+      position: relative;
+      box-shadow: 
+        0 8px 25px rgba(31, 41, 55, 0.2),
+        0 4px 12px rgba(31, 41, 55, 0.1);
+      animation: cardSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: rotate(0deg);
+    }
+
+    .interface-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 
+        0 12px 35px rgba(31, 41, 55, 0.3),
+        0 8px 20px rgba(31, 41, 55, 0.15);
+      background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    }
+
+    .interface-card:active {
+      animation: cardTap 0.3s ease;
+    }
+
+    .interface-card.clicked {
+      animation: cardReturn 0.6s cubic-bezier(0.25, 1.15, 0.5, 1) forwards;
+    }
+
+
+    .interface-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #ffffff;
+      animation: titleFadeIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .interface-description {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.5;
+      margin: 0;
+      animation: descriptionFadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .research-info {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 16px;
+      padding: 32px;
+      border: 1px solid rgba(226, 232, 240, 0.6);
+      margin-top: 40px;
+      animation: infoSlideIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.04);
+      backdrop-filter: blur(10px);
+    }
+
+    .research-info h3 {
+      margin: 0 0 12px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      animation: infoTitleFadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .research-info p {
+      margin: 0;
+      color: #6b7280;
+      line-height: 1.6;
+      font-size: 14px;
+      animation: infoTextFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Animazioni professionali */
+    .interface-card:nth-child(1) { animation-delay: 0.1s; }
+    .interface-card:nth-child(2) { animation-delay: 0.2s; }
+    .interface-card:nth-child(3) { animation-delay: 0.3s; }
+    .interface-card:nth-child(4) { animation-delay: 0.4s; }
+
+    /* Keyframes professionali */
+    @keyframes containerFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+
+    @keyframes badgeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes titleSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes underlineExpand {
+      from { width: 0; }
+      to { width: 60px; }
+    }
+
+    @keyframes subtitleFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes cardSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes titleFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes descriptionFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes infoSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+
+    @keyframes infoTitleFadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes infoTextFadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Animazioni del send button per le card */
+    @keyframes cardTap {
+      0% { transform: translateY(-2px) scale(1.02); }
+      50% { transform: translateY(0) scale(0.95); }
+      100% { transform: translateY(-2px) scale(1.02); }
+    }
+
+    @keyframes cardReturn {
+      0% { transform: translateY(-2px) scale(1.02); }
+      70% { transform: translateY(-4px) scale(1.05); }
+      100% { transform: translateY(-2px) scale(1.02); }
+    }
+
+    /* Performance optimizations */
+    .interface-card, .main-container, .research-badge, h1 {
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="header">
+      <div class="research-badge">Research Platform</div>
+      <h1>Multimodal Chatbot</h1>
+      <p class="subtitle">Studio comparativo delle interfacce conversazionali</p>
+    </div>
+    
+    <div class="interfaces-grid">
+      <a href="./textual_formal/" class="interface-card">
+        <div class="interface-title">Testuale Formale</div>
+        <div class="interface-description">Interfaccia testuale con tono professionale e strutturato per analisi formali</div>
+      </a>
+      
+      <a href="./textual_empathic/" class="interface-card">
+        <div class="interface-title">Testuale Empatica</div>
+        <div class="interface-description">Comunicazione testuale con approccio empatico e supportivo</div>
+      </a>
+      
+      <a href="./vocal_formal/" class="interface-card">
+        <div class="interface-title">Vocale Formale</div>
+        <div class="interface-description">Interazione vocale con tono professionale e preciso</div>
+      </a>
+      
+      <a href="./vocal_empathic/" class="interface-card">
+        <div class="interface-title">Vocale Empatica</div>
+        <div class="interface-description">Comunicazione vocale con intonazione empatica e naturale</div>
+      </a>
+    </div>
+    
+    <div class="research-info">
+      <h3>Obiettivo della Ricerca</h3>
+      <p>Questa piattaforma permette di confrontare l'efficacia di diverse modalità di interazione chatbot, analizzando l'impatto del tono (formale vs empatico) e del canale (testuale vs vocale) sull'esperienza utente e sui risultati conversazionali.</p>
+    </div>
+  </div>
+
+  <script>
+    // Animazioni delle card come il send button
+    document.querySelectorAll('.interface-card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        // Aggiungi classe per animazione di ritorno
+        this.classList.add('clicked');
+        
+        // Rimuovi classe dopo l'animazione
+        setTimeout(() => {
+          this.classList.remove('clicked');
+        }, 600);
+      });
+    });
+  </script>
+</body>
+</html>
