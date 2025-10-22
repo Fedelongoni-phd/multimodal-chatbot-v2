@@ -1,0 +1,424 @@
+:root {
+  --user-bg: #1f2937;
+  --user-bg-light: #334155;
+  --bot-bg: #f9fafb;
+  --container-bg: #ffffff;
+  --radius: 14px;
+  --focus-ring: 0 0 0 3px rgba(59,130,246,0.35);
+  
+  /* Responsive breakpoints */
+  --mobile: 480px;
+  --tablet: 768px;
+  --desktop: 1024px;
+}
+
+body {
+  background: #f3f4f6;
+  font-family: system-ui, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Previene scroll su mobile */
+}
+
+/* Mobile First - Base */
+.chat-wrapper {
+  background: var(--container-bg);
+  border-radius: 0; /* Full screen su mobile */
+  box-shadow: none;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .chat-wrapper {
+    width: 90vw;
+    height: 85vh;
+    max-width: 600px;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .chat-wrapper {
+    width: 100%;
+    max-width: 480px;
+    height: 80vh;
+  }
+}
+
+.chat-window {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 16px; /* Mobile */
+  scroll-behavior: smooth;
+}
+
+/* Tablet/Desktop */
+@media (min-width: 768px) {
+  .chat-window {
+    padding: 20px;
+  }
+}
+
+.msg {
+  display: flex;
+  margin: 10px 0;
+}
+
+/* Mobile - più spazio tra messaggi */
+@media (max-width: 767px) {
+  .msg {
+    margin: 12px 0;
+  }
+}
+
+.bubble {
+  padding: 14px 18px; /* Mobile - più padding */
+  border-radius: var(--radius);
+  line-height: 1.4;
+  max-width: 85%; /* Mobile - più spazio */
+  font-size: 1rem; /* Mobile - evita zoom */
+}
+
+/* Tablet/Desktop */
+@media (min-width: 768px) {
+  .bubble {
+    padding: 10px 14px;
+    max-width: 80%;
+    font-size: 0.95rem;
+  }
+}
+
+.msg.user {
+  justify-content: flex-end;
+}
+.msg.user .bubble {
+  background: var(--user-bg);
+  color: #fff;
+  border-bottom-right-radius: 2px;
+}
+
+.msg.bot .bubble {
+  background: var(--bot-bg);
+  color: #111;
+  border-bottom-left-radius: 2px;
+}
+
+/* INPUT AREA */
+.chat-input-area {
+  display: flex;
+  padding: 10px; /* Mobile */
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  align-items: center;
+}
+
+/* Tablet/Desktop */
+@media (min-width: 768px) {
+  .chat-input-area {
+    padding: 12px;
+  }
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 14px 16px; /* Mobile - più grande per touch */
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  outline: none;
+  font-size: 16px; /* Mobile - previene zoom su iOS */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Tablet/Desktop */
+@media (min-width: 768px) {
+  .chat-input-area input {
+    padding: 12px 16px;
+    font-size: 1rem;
+  }
+}
+.chat-input-area input:focus {
+  border-color: #93c5fd;
+  box-shadow: var(--focus-ring);
+}
+
+.chat-input-area button {
+  margin-left: 8px;
+  background: var(--user-bg);
+  color: #fff;
+  border: none;
+  width: 48px; /* Mobile - più grande per touch */
+  height: 48px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease, background 0.25s ease;
+  min-height: 44px; /* Apple HIG minimum */
+  min-width: 44px;
+}
+
+/* Tablet/Desktop */
+@media (min-width: 768px) {
+  .chat-input-area button {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.chat-input-area button:hover {
+  background: var(--user-bg-light);
+}
+.chat-input-area button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.chat-input-area button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Rotazione su scrittura */
+.chat-input-area button.up {
+  transform: rotate(90deg);
+}
+
+/* Tap d’invio */
+@keyframes sendTap {
+  0% { transform: rotate(90deg) scale(1); }
+  50% { transform: rotate(95deg) scale(0.9); }
+  100% { transform: rotate(90deg) scale(1); }
+}
+.chat-input-area button.sent {
+  animation: sendTap 0.3s ease;
+}
+
+/* Ritorno con rimbalzo */
+@keyframes returnSmooth {
+  0% { transform: rotate(90deg); }
+  70% { transform: rotate(-15deg); }
+  100% { transform: rotate(0deg); }
+}
+.chat-input-area button.return {
+  animation: returnSmooth 0.6s cubic-bezier(0.25, 1.15, 0.5, 1) forwards;
+}
+
+/* TYPING INDICATOR */
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--bot-bg);
+  border-radius: var(--radius);
+  width: fit-content;
+  margin-top: 6px;
+}
+
+.typing-indicator span {
+  width: 6px;
+  height: 6px;
+  background: #9ca3af;
+  border-radius: 50%;
+  animation: blink 1.2s infinite ease-in-out;
+  opacity: 0.4;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+/* Scrollbar */
+.chat-window::-webkit-scrollbar { width: 10px; }
+.chat-window::-webkit-scrollbar-track { background: transparent; }
+.chat-window::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* ANIMAZIONI AVANZATE */
+.bubble {
+  animation: messageSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.bubble:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.msg.user .bubble {
+  animation: userMessageSlide 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.msg.bot .bubble {
+  animation: botMessageSlide 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.typing-indicator {
+  animation: typingSlideIn 0.3s ease-out;
+}
+
+.typing-indicator span {
+  animation: typingBounce 1.6s infinite ease-in-out;
+}
+
+.chat-input-area button {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-input-area button:hover {
+  transform: scale(1.05) translateY(-1px);
+  box-shadow: 0 6px 20px rgba(31, 41, 55, 0.3);
+}
+
+.chat-input-area button:active {
+  transform: scale(0.95) translateY(1px);
+  transition: all 0.1s ease;
+}
+
+.chat-input-area button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+  pointer-events: none;
+}
+
+.chat-input-area button:active::before {
+  width: 100px;
+  height: 100px;
+}
+
+.chat-input-area input {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.chat-input-area input:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.chat-wrapper {
+  animation: containerFadeIn 0.6s ease-out;
+}
+
+/* PERFORMANCE OPTIMIZATIONS */
+.bubble, .chat-input-area button {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.chat-window {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* KEYFRAMES */
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes userMessageSlide {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes botMessageSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes typingSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typingBounce {
+  0%, 60%, 100% { 
+    transform: translateY(0) scale(1);
+    opacity: 0.4;
+  }
+  30% { 
+    transform: translateY(-8px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes containerFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

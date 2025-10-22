@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#1f2937" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>Chatbot Formale</title>
+
+    <!-- Stesso stile del chatbot empatico -->
+    <link rel="stylesheet" href="./assets/style.css" />
+
+    <!-- Libreria Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+
+  <body>
+    <main class="chat-wrapper" role="main">
+      <!-- ❌ Titolo rimosso -->
+      <section class="chat-window" id="chat" role="log" aria-live="polite" aria-relevant="additions" aria-label="Finestra chat">
+        <div class="msg bot">
+          <div class="bubble">👋 Buongiorno! Come posso assisterla oggi?</div>
+        </div>
+      </section>
+
+      <form class="chat-input-area" id="chatForm" autocomplete="off" role="form" aria-label="Invia un messaggio">
+        <input
+          type="text"
+          id="userInput"
+          placeholder="Scrivi un messaggio..."
+          aria-label="Scrivi un messaggio"
+        />
+        <button id="send" type="submit" aria-label="Invia messaggio" aria-controls="chat">↩</button>
+      </form>
+    </main>
+
+    <!-- Script -->
+    <script src="./assets/script.js"></script>
+  </body>
+</html>

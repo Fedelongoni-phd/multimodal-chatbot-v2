@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chat Empatica</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#1f2937" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <!-- stile del mockup -->
+    <link rel="stylesheet" href="./assets/style.css" />
+  </head>
+
+  <body>
+    <main class="chat-wrapper" role="main">
+      <section class="chat-window" id="chat" role="log" aria-live="polite" aria-relevant="additions" aria-label="Finestra chat">
+        <div class="msg bot">
+          <div class="bubble">🎙️ Tieni premuto per parlare</div>
+        </div>
+      </section>
+
+      <div class="voice-controls" role="group" aria-label="Controlli vocali">
+        <button id="micButton" aria-label="Tieni premuto per registrare" aria-pressed="false">
+          <div class="mic-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mic-icon" viewBox="0 0 24 24">
+              <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z" />
+              <path d="M19 11a1 1 0 0 0-2 0 5 5 0 0 1-10 0 1 1 0 0 0-2 0 7 7 0 0 0 6 6.92V21H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-3.08A7 7 0 0 0 19 11z" />
+            </svg>
+          </div>
+        </button>
+        <!-- audio player nascosto per la risposta vocale -->
+        <audio id="replyAudio" hidden aria-label="Risposta vocale"></audio>
+      </div>
+    </main>
+
+    <!-- Pulsante per aprire dispositivi -->
+    <div class="devices-toggle">
+      <button class="devices-btn" onclick="toggleDevices()" title="Impostazioni Audio">
+        ⚙️
+      </button>
+    </div>
+
+    <!-- Panel dispositivi -->
+    <div class="audio-devices-panel" id="devicesPanel" style="display: none;">
+      <div class="devices-header">
+        <h3>🎤 Dispositivi Audio</h3>
+        <button class="close-devices" onclick="toggleDevices()">✕</button>
+      </div>
+      
+      <div class="device-group">
+        <label for="microphoneSelect">Microfono:</label>
+        <select id="microphoneSelect" class="device-select">
+          <option value="">Caricamento...</option>
+        </select>
+      </div>
+      
+      <div class="device-group">
+        <label for="speakerSelect">Casse/Auricolari:</label>
+        <select id="speakerSelect" class="device-select">
+          <option value="">Caricamento...</option>
+        </select>
+      </div>
+      
+      <div class="device-actions">
+        <button class="test-mic" onclick="testMicrophone()">🎤 Test Microfono</button>
+        <button class="test-speaker" onclick="testSpeaker()">🔊 Test Audio</button>
+      </div>
+    </div>
+
+    <script src="./assets/script.js"></script>
+  </body>
+</html>
